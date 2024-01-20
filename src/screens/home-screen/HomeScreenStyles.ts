@@ -7,8 +7,11 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderWidth: 1,
+    paddingHorizontal: 16,
+  },
+  listArea: {
+    flex: 1,
   },
   pageTitle: {
     fontSize: 18,
