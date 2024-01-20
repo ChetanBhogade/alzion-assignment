@@ -1,13 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {AppState, AppStateStatus} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
+
 import {RootNavigationTypes} from './NavigationModel';
 import HomeScreen from '../screens/home-screen/HomeScreen';
 import ProductDetailsScreen from '../screens/product-details-screen/ProductDetailsScreen';
 
 const DefaultFirstScreen = RootNavigationTypes.HomeScreen;
 
-const Stack = createNativeStackNavigator();
+const Stack = createSharedElementStackNavigator();
 
 const AppStack = () => {
   return (
@@ -21,6 +21,10 @@ const AppStack = () => {
       <Stack.Screen
         name={RootNavigationTypes.ProductDetailsScreen}
         component={ProductDetailsScreen}
+        sharedElements={(route, otherRoute, showing) => {
+          const {productData} = route.params;
+          return [`item.${productData.id}.image`];
+        }}
       />
     </Stack.Navigator>
   );

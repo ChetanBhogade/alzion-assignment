@@ -1,19 +1,18 @@
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import Styles from './HomeScreenStyles';
-import Card from '../../components/Card/Card';
+import Card, {IProduct} from '../../components/Card/Card';
 import {RootNavigationTypes} from '../../navigations/NavigationModel';
 
 const HomeScreen = ({navigation}: any) => {
-  const [listData, setListData] = useState<any[]>([]);
+  const [listData, setListData] = useState<IProduct[]>([]);
 
   const fetchData = () => {
     axios
       .get('https://create.blinkapi.io/api/eSphKNzwb9EJBt6GBjKx7Q')
       .then(response => {
-        console.log('response.data: ', response.data);
         setListData(response.data);
       })
       .catch(error => {
@@ -31,13 +30,11 @@ const HomeScreen = ({navigation}: any) => {
         <View style={Styles.listArea}>
           <FlatList
             data={listData}
-            keyExtractor={item => item.id}
-            renderItem={({item, index}) => {
+            keyExtractor={item => item.id.toString()}
+            renderItem={({item}) => {
               return (
                 <Card
-                  title={item.name}
-                  price={item.price}
-                  imageUrl={item.image}
+                  product={item}
                   onPress={() =>
                     navigation.navigate(
                       RootNavigationTypes.ProductDetailsScreen,
